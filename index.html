@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BABY Token — Mainnet Launch Announcement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0a0c;
+    --bg-card: #131418;
+    --gold: #d4a341;
+    --gold-bright: #f5c45e;
+    --green: #6ee19c;
+    --text: #f4f1ea;
+    --text-mute: #8b8d92;
+    --line: #232529;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #000;
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 24px;
+  }
+  .poster {
+    width: 1080px; height: 1080px;
+    background:
+      radial-gradient(ellipse at 75% 30%, rgba(212,163,65,0.10), transparent 55%),
+      radial-gradient(ellipse at 20% 85%, rgba(212,163,65,0.05), transparent 50%),
+      var(--bg-deep);
+    position: relative; overflow: hidden;
+    padding: 40px;
+    display: flex; flex-direction: column;
+    gap: 18px; border-radius: 24px;
+  }
+  .candles { position: absolute; inset: 0; opacity: 0.10; pointer-events: none; z-index: 0; }
+  .grain {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.30; mix-blend-mode: overlay; pointer-events: none; z-index: 1;
+  }
+  .poster > .layer { position: relative; z-index: 2; flex-shrink: 0; }
+
+  /* HEADER */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+  .header-left { flex: 1; min-width: 0; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.18em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 {
+    font-family: 'Anton', sans-serif; font-weight: 400;
+    font-size: 76px; line-height: 0.94;
+    letter-spacing: 0.005em; text-transform: uppercase; color: var(--text);
+  }
+  .subtitle { margin-top: 14px; color: var(--text-mute); font-size: 15px; max-width: 480px; line-height: 1.45; }
+  .ticker-pill {
+    border: 1px solid var(--line); background: rgba(20,21,25,0.6);
+    backdrop-filter: blur(4px); border-radius: 999px;
+    padding: 11px 20px; display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.18em; color: var(--text-mute); white-space: nowrap;
+  }
+  .ticker-pill b { color: var(--gold-bright); font-weight: 600; letter-spacing: 0.16em; }
+
+  /* MAIN */
+  .main { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; }
+  .stats-card, .visual-card {
+    background: linear-gradient(180deg, rgba(24,26,32,0.85), rgba(15,16,19,0.85));
+    border: 1px solid var(--line); border-radius: 18px; position: relative; overflow: hidden;
+  }
+  .stats-card { padding: 8px 22px; display: flex; flex-direction: column; justify-content: space-around; }
+  .stat-row {
+    display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: center;
+    padding: 10px 2px; border-bottom: 1px solid var(--line);
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(212,163,65,0.08); color: var(--gold-bright);
+  }
+  .stat-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.16em; color: var(--text-mute); text-transform: uppercase; margin-bottom: 2px;
+  }
+  .stat-value { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.005em; line-height: 1.15; }
+  .stat-value .accent { color: var(--gold-bright); }
+
+  /* VISUAL */
+  .visual-card { display: flex; flex-direction: column; padding: 20px; }
+  .coin-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
+  .coin-glow {
+    position: absolute; width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,196,94,0.35), transparent 65%);
+    filter: blur(20px); z-index: 1;
+  }
+  .coin { width: 280px; height: 280px; position: relative; z-index: 2; animation: float 5s ease-in-out infinite; }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+  .date-block {
+    flex-shrink: 0; background: linear-gradient(135deg, rgba(212,163,65,0.10), rgba(212,163,65,0.02));
+    border: 1px solid rgba(212,163,65,0.25); border-radius: 14px;
+    padding: 16px 18px; display: grid; grid-template-columns: 50px 1fr; gap: 14px; align-items: center; margin-top: 12px;
+  }
+  .date-icon { width: 50px; height: 50px; border-radius: 12px; background: rgba(212,163,65,0.12); display: flex; align-items: center; justify-content: center; color: var(--gold-bright); }
+  .date-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .date-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--text-mute); text-transform: uppercase; margin-bottom: 2px; }
+  .date-sub { color: var(--text-mute); font-size: 12px; margin-bottom: 2px; }
+  .date-main { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--gold-bright); letter-spacing: 0.04em; line-height: 1; }
+
+  /* BADGES */
+  .badges {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: linear-gradient(180deg, rgba(24,26,32,0.85), rgba(15,16,19,0.85));
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+  }
+  .badge { padding: 16px; display: flex; gap: 12px; align-items: flex-start; border-right: 1px solid var(--line); }
+  .badge:last-child { border-right: none; }
+  .badge-icon { width: 32px; height: 32px; color: var(--green); flex-shrink: 0; }
+  .badge-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .badge-title { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.04em; line-height: 1.05; color: var(--text); margin-bottom: 4px; }
+  .badge-text { font-size: 11.5px; color: var(--text-mute); line-height: 1.35; }
+
+  /* FOOTER */
+  .footer {
+    background: linear-gradient(180deg, rgba(24,26,32,0.85), rgba(15,16,19,0.85));
+    border: 1px solid var(--line); border-radius: 18px;
+    padding: 16px 22px; display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 16px;
+  }
+  .rocket-icon { width: 36px; height: 36px; color: var(--gold-bright); }
+  .rocket-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .footer-main { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; color: var(--text); line-height: 1; margin-bottom: 5px; }
+  .footer-sub { color: var(--gold-bright); font-size: 12px; font-style: italic; }
+  .disclaimer { text-align: right; max-width: 290px; color: var(--text-mute); font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; letter-spacing: 0.02em; }
+  .disclaimer b { color: var(--gold); display: block; margin-bottom: 3px; letter-spacing: 0.12em; }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <svg class="candles" viewBox="0 0 1080 1080" preserveAspectRatio="none">
+    <g stroke="#d4a341" stroke-width="1.5" fill="#d4a341">
+      <g transform="translate(560,540)"><line x1="0" y1="-50" x2="0" y2="80"/><rect x="-8" y="-30" width="16" height="60"/></g>
+      <g transform="translate(620,510)"><line x1="0" y1="-70" x2="0" y2="60"/><rect x="-8" y="-50" width="16" height="80" fill="none"/></g>
+      <g transform="translate(680,470)"><line x1="0" y1="-90" x2="0" y2="40"/><rect x="-8" y="-70" width="16" height="100"/></g>
+      <g transform="translate(740,420)"><line x1="0" y1="-110" x2="0" y2="20"/><rect x="-8" y="-90" width="16" height="120" fill="none"/></g>
+      <g transform="translate(800,360)"><line x1="0" y1="-130" x2="0" y2="0"/><rect x="-8" y="-110" width="16" height="140"/></g>
+      <g transform="translate(860,300)"><line x1="0" y1="-150" x2="0" y2="-20"/><rect x="-8" y="-130" width="16" height="160" fill="none"/></g>
+      <g transform="translate(920,240)"><line x1="0" y1="-170" x2="0" y2="-40"/><rect x="-8" y="-150" width="16" height="180"/></g>
+      <g transform="translate(980,180)"><line x1="0" y1="-190" x2="0" y2="-60"/><rect x="-8" y="-170" width="16" height="200" fill="none"/></g>
+    </g>
+  </svg>
+  <div class="grain"></div>
+
+  <div class="layer header">
+    <div class="header-left">
+      <div class="eyebrow">▲ New Token Listing — Mainnet Launch</div>
+      <h1>The Drop<br>of a Lifetime</h1>
+      <div class="subtitle">Two long-time HODLers are proud to announce a one-of-one mint on the family chain. Whitepaper now in active development.</div>
+    </div>
+    <div class="ticker-pill">
+      TICKER: <b>$BABY</b>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5c45e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+    </div>
+  </div>
+
+  <div class="layer main">
+
+    <div class="stats-card">
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <div><div class="stat-label">Project</div><div class="stat-value"> <span class="accent">Human v2.0</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/><path d="M19 8v6"/></svg></div>
+        <div><div class="stat-label">Lead Investors</div><div class="stat-value"><span class="accent">Sandra & Jonas</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <div><div class="stat-label">Funding Round</div><div class="stat-value"> <span class="accent">Post-Seed</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M16 9.5a3.5 3.5 0 0 0-3.5-3.5h-1A3.5 3.5 0 0 0 8 9.5c0 1.93 1.57 3.5 3.5 3.5h1a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5h-1A3.5 3.5 0 0 1 8 16.5"/></svg></div>
+        <div><div class="stat-label">Valuation</div><div class="stat-value"> <span class="accent">∞</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg></div>
+        <div><div class="stat-label">Consensus Mechanism</div><div class="stat-value"><span class="accent">Proof of Love</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><div class="stat-label">Vesting</div><div class="stat-value"><span class="accent">~18 yrs</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+        <div><div class="stat-label">Volatility</div><div class="stat-value"><span class="accent">Maximum</span></div></div>
+      </div>
+    </div>
+
+    <div class="visual-card">
+      <div class="coin-wrap">
+        <div class="coin-glow"></div>
+        <svg class="coin" viewBox="0 0 320 320">
+          <defs>
+            <radialGradient id="coinGold" cx="35%" cy="30%" r="80%">
+              <stop offset="0%" stop-color="#ffe49a"/>
+              <stop offset="40%" stop-color="#f5c45e"/>
+              <stop offset="80%" stop-color="#c9952f"/>
+              <stop offset="100%" stop-color="#7a5512"/>
+            </radialGradient>
+            <radialGradient id="coinInner" cx="50%" cy="50%" r="55%">
+              <stop offset="0%" stop-color="#fde29a"/>
+              <stop offset="100%" stop-color="#d4a341"/>
+            </radialGradient>
+            <path id="topArc" d="M 60 160 A 100 100 0 0 1 260 160" fill="none"/>
+            <path id="botArc" d="M 60 165 A 100 100 0 0 0 260 165" fill="none"/>
+          </defs>
+          <circle cx="160" cy="160" r="148" fill="url(#coinGold)"/>
+          <circle cx="160" cy="160" r="148" fill="none" stroke="#7a5512" stroke-width="2" opacity="0.5"/>
+          <circle cx="160" cy="160" r="118" fill="url(#coinInner)"/>
+          <circle cx="160" cy="160" r="118" fill="none" stroke="#8a6418" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="160" cy="160" r="128" fill="none" stroke="#7a5512" stroke-width="1.2" stroke-dasharray="2 4" opacity="0.7"/>
+          <text font-family="Bebas Neue, sans-serif" font-size="20" letter-spacing="6" fill="#5a3e0e" font-weight="700">
+            <textPath href="#topArc" startOffset="50%" text-anchor="middle">BABY · TOKEN · $BABY</textPath>
+          </text>
+          <text font-family="Bebas Neue, sans-serif" font-size="16" letter-spacing="5" fill="#5a3e0e" font-weight="700">
+            <textPath href="#botArc" startOffset="50%" text-anchor="middle">FUTURE IS LOADING ◆ EST. 2026</textPath>
+          </text>
+          <g transform="translate(160 175)">
+            <circle cx="0" cy="0" r="58" fill="#fde29a" stroke="#8a6418" stroke-width="1.5"/>
+            <path d="M -8 -52 Q -2 -64 8 -58 Q 14 -52 6 -48" fill="none" stroke="#5a3e0e" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="-32" cy="10" r="7" fill="#f0a872" opacity="0.5"/>
+            <circle cx="32" cy="10" r="7" fill="#f0a872" opacity="0.5"/>
+            <circle cx="-15" cy="-8" r="4" fill="#3a2607"/>
+            <circle cx="15" cy="-8" r="4" fill="#3a2607"/>
+            <circle cx="-13.5" cy="-9.5" r="1.3" fill="#fff"/>
+            <circle cx="16.5" cy="-9.5" r="1.3" fill="#fff"/>
+            <path d="M -14 12 Q 0 24 14 12" fill="none" stroke="#3a2607" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <g fill="#5a3e0e">
+            <path d="M 50 160 l 4 -4 l 4 4 l -4 4 z"/>
+            <path d="M 262 160 l 4 -4 l 4 4 l -4 4 z"/>
+          </g>
+          <ellipse cx="100" cy="80" rx="40" ry="18" fill="#fff" opacity="0.25" transform="rotate(-30 100 80)"/>
+        </svg>
+      </div>
+      <div class="date-block">
+        <div class="date-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="date-label">Genesis Block</div>
+          <div class="date-sub">Estimated airdrop date</div>
+          <div class="date-main">November 11 · 2026</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="layer badges">
+    <div class="badge">
+      <div class="badge-icon"><svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></div>
+      <div><div class="badge-title">Diamond Hands</div><div class="badge-text">Legal obligation to hold for at least 18 cycles.</div></div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div><div class="badge-title">Ultra-Rare Mint</div><div class="badge-text">Total supply of 1 (supply on the family chain might be subject to change)</div></div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div><div class="badge-title">Yield: ∞ APY</div><div class="badge-text">Pays out in giggles, hugs, and tiny socks.</div></div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+      <div><div class="badge-title">Community Aping In</div><div class="badge-text">Grandparents and Hobby-Aunts already maxed their bags.</div></div>
+    </div>
+  </div>
+
+  <div class="layer footer">
+    <div class="rocket-icon">
+      <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+    </div>
+    <div>
+      <div class="footer-main">We Are All-In On This Project.</div>
+      <div class="footer-sub">HODLing for a brighter future. WAGMI 👶</div>
+    </div>
+    <div class="disclaimer">
+      <b>⚠ Risk Disclosure</b>
+      Past performance not indicative of future returns. Token may cry, laugh, refuse to sleep, demand snacks at 3 AM. DYOR · NFA.
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
